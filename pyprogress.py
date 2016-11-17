@@ -7,8 +7,7 @@ class bar(object):
         self.amount = 0
         self.width = width
         self.count = count
-        
-    def setup(self):
+        self.done = 0
         sys.stdout.write('[%s]'%(' '*self.width))
         sys.stdout.flush()
         sys.stdout.write('\b'*(self.width+1))
@@ -16,8 +15,10 @@ class bar(object):
     def update(self):
         self.amount %= self.count
         self.amount += self.width
-        sys.stdout.write('-'*(self.amount//self.count))
+        self.length = self.amount // self.count
+        if self.length > 1:
+            self.done += 1
+        sys.stdout.write('-'*self.length)
+        if self.done == self.count:
+            sys.stdout.write('\n')
         sys.stdout.flush()
-
-    def finish(self):
-        sys.stdout.write('\n')
